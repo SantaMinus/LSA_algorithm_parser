@@ -9,12 +9,13 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class GUI {
-    private static final String FILE_PATH = "/home/katerynasavina/Documents/tpks1.txt";
+    private static final String FILE_PATH = "tpks1.txt";
     private LSAParser parser;
     private JButton ok = new JButton("OK");
     private JMenuBar menu = new JMenuBar();
@@ -75,7 +76,7 @@ public class GUI {
                 output.setText(output.getText() + "  " + LSAParser.lsa.get(i));
             }
 
-            LSAParser.calculate();
+            parser.calculate();
         } catch (Exception e) {
             output.setText(input.getText() + "\nEmpty text field");
         }
@@ -83,7 +84,7 @@ public class GUI {
 
     private void test() {
         int tmp = 0;
-        reachabilityMatrix(parser.matrix);
+        reachabilityMatrix(parser.getMatrix());
         for (int j = 0; j < rm.length; j++) {
             for (int[] ints : rm) {
                 tmp += ints[j];
@@ -97,15 +98,15 @@ public class GUI {
 
     private void save() {
         output.setText(output.getText() + "\n" + "Saved");
-        java.io.PrintStream ps = null;
+        PrintStream ps = null;
         try {
-            ps = new java.io.PrintStream(FILE_PATH);
+            ps = new PrintStream(FILE_PATH);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         for (int i = 0; i < LSAParser.lsa.size(); i++) {
             for (int j = 0; j < LSAParser.lsa.size(); j++) {
-                ps.print(LSAParser.matrix[i][j]);
+                ps.print(parser.getMatrix()[i][j]);
             }
             ps.println("\n");
         }
@@ -131,7 +132,7 @@ public class GUI {
             s = inFile.nextLine();
             inFile.close();
 
-            LSAParser.matrix = new int[s.length()][s.length()];
+            parser.setMatrix(new int[s.length()][s.length()]);
             parser.setAdditional(new int[s.length()]);
             try {
                 inFile = new Scanner(file);
@@ -144,7 +145,7 @@ public class GUI {
                 if (s.equals("sep"))
                     break;
                 for (int i = 0; i < s.length(); i++) {
-                    LSAParser.matrix[k][i] = Character.digit(s.charAt(i), 10);
+                    parser.getMatrix()[k][i] = Character.digit(s.charAt(i), 10);
                 }
                 if (!s.equals(""))
                     k++;
@@ -155,9 +156,9 @@ public class GUI {
             }
 
             output.setText(output.getText() + "\n");
-            for (int i = 0; i < LSAParser.matrix.length; i++) {
-                for (int j = 0; j < LSAParser.matrix.length; j++) {
-                    output.setText(output.getText() + LSAParser.matrix[i][j]);
+            for (int i = 0; i < parser.getMatrix().length; i++) {
+                for (int j = 0; j < parser.getMatrix().length; j++) {
+                    output.setText(output.getText() + parser.getMatrix()[i][j]);
                 }
                 output.setText(output.getText() + "\n");
             }
@@ -188,17 +189,18 @@ public class GUI {
 
     //LSA objects generation
     private void generateLSA() {
-        boolean x = false, y = false;
+        boolean x = false;
+        boolean y = false;
         Node b = new Node("b", 0, 0);
         Node e;
         nodes.add(b);
 
-        for (int i = 1; i < LSAParser.matrix.length; i++) {
-            for (int j = 0; j < LSAParser.matrix.length; j++) {
-                if (LSAParser.matrix[i][j] == 2) {
+        for (int i = 1; i < parser.getMatrix().length; i++) {
+            for (int j = 0; j < parser.getMatrix().length; j++) {
+                if (parser.getMatrix()[i][j] == 2) {
                     x = true;
                 }
-                if (LSAParser.matrix[i][j] == 1) {
+                if (parser.getMatrix()[i][j] == 1) {
                     y = true;
                 }
             }
@@ -215,8 +217,8 @@ public class GUI {
         }
         for (int i = 0; i < nodes.size(); i++) {
             if (nodes.get(i).getName().equals("y") || nodes.get(i).getName().equals("b")) {
-                for (int j = 0; j < LSAParser.matrix.length; j++) {
-                    if (LSAParser.matrix[nodes.get(i).getN()][j] == 1) {
+                for (int j = 0; j < parser.getMatrix().length; j++) {
+                    if (parser.getMatrix()[nodes.get(i).getN()][j] == 1) {
                         for (Node node : nodes) {
                             if (node.getN() == j)
                                 nodes.get(i).setNext(node);
@@ -225,14 +227,14 @@ public class GUI {
                 }
             }
             if (nodes.get(i).getName().equals("x")) {
-                for (int j = 0; j < LSAParser.matrix.length; j++) {
-                    if (LSAParser.matrix[nodes.get(i).getN()][j] == 1) {
+                for (int j = 0; j < parser.getMatrix().length; j++) {
+                    if (parser.getMatrix()[nodes.get(i).getN()][j] == 1) {
                         for (Node node : nodes) {
                             if (node.getN() == j)
                                 nodes.get(i).setNext(node);
                         }
                     }
-                    if (LSAParser.matrix[nodes.get(i).getN()][j] == 2) {
+                    if (parser.getMatrix()[nodes.get(i).getN()][j] == 2) {
                         for (Node node : nodes) {
                             if (node.getN() == j)
                                 ((Condition) nodes.get(i)).setFalseWay(node);
@@ -251,7 +253,7 @@ public class GUI {
     private void reachabilityMatrix(int[][] matrix) {
         int[][] e1 = matrix.clone();
         int[][] tmp = new int[matrix.length][matrix.length];
-        rm = new int[LSAParser.matrix.length][LSAParser.matrix.length];
+        rm = new int[parser.getMatrix().length][parser.getMatrix().length];
         for (int i = 0; i < nodes.size(); i++) {
             for (int m = 0; m < matrix.length; m++) {
                 for (int j = 0; j < matrix.length; j++) {

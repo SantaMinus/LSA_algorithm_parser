@@ -6,10 +6,10 @@ import java.util.Objects;
 
 public class LSAParser {
     static List<String> lsa = new ArrayList<>();
-    static int[][] matrix;
-    private static int[] additional;
-    private static int ni = 0;
-    private static int no = 0;
+    private int[][] matrix;
+    private int[] additional;
+    private int ni = 0;
+    private int no = 0;
 
     String s;
 
@@ -21,7 +21,7 @@ public class LSAParser {
         return false;
     }
 
-    static void calculate() {
+    void calculate() {
         //check for BEGIN
         if (lsa.get(0).equalsIgnoreCase("b")) {
             for (int i = 1; i < lsa.size(); i++) {
@@ -52,7 +52,7 @@ public class LSAParser {
 
     }
 
-    private static void buildMatrix() {
+    private void buildMatrix() {
         matrix = new int[lsa.size()][lsa.size()];
         additional = new int[lsa.size()];
         matrix[0][1] = 1;
@@ -103,7 +103,15 @@ public class LSAParser {
         return additional;
     }
 
-    void setAdditional(int[] ints) {
-        additional = ints;
+    void setAdditional(int[] additional) {
+        this.additional = additional;
+    }
+
+    int[][] getMatrix() {
+        return matrix;
+    }
+
+    void setMatrix(int[][] matrix) {
+        this.matrix = matrix;
     }
 }
