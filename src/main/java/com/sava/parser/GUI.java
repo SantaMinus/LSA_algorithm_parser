@@ -13,9 +13,11 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+// TODO: move into gui package
 public class GUI {
-    private static final String FILE_PATH = "tpks1.txt";
     private LSAParser parser;
     private JButton ok = new JButton("OK");
     private JMenuBar menu = new JMenuBar();
@@ -24,6 +26,10 @@ public class GUI {
     private ArrayList<Node> nodes = new ArrayList<>();
     private JButton test = new JButton("Test");
     private int[][] rm;
+
+    private static final String FILE_PATH = "tpks1.txt";
+    private static final String FILE_NOT_FOUND = "File not found";
+    private static final Logger LOGGER = Logger.getLogger(GUI.class.getName());
 
     public GUI(LSAParser parser) {
         this.parser = parser;
@@ -49,6 +55,7 @@ public class GUI {
 
         //adding listeners
         frame.addWindowFocusListener(new WindowAdapter() {
+            @Override
             public void windowGainedFocus(WindowEvent e) {
                 input.requestFocusInWindow();
             }
@@ -102,7 +109,7 @@ public class GUI {
         try {
             ps = new PrintStream(FILE_PATH);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, FILE_NOT_FOUND, e);
         }
         for (int i = 0; i < LSAParser.lsa.size(); i++) {
             for (int j = 0; j < LSAParser.lsa.size(); j++) {
@@ -127,7 +134,7 @@ public class GUI {
             try {
                 inFile = new Scanner(file);
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                LOGGER.log(Level.SEVERE, FILE_NOT_FOUND, e);
             }
             s = inFile.nextLine();
             inFile.close();
@@ -137,7 +144,7 @@ public class GUI {
             try {
                 inFile = new Scanner(file);
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                LOGGER.log(Level.SEVERE, FILE_NOT_FOUND, e);
             }
 
             while (inFile.hasNext()) {
@@ -266,6 +273,7 @@ public class GUI {
             for (int m = 0; m < matrix.length; m++) {
                 for (int j = 0; j < matrix.length; j++) {
                     rm[m][j] = matrix[m][j] ^ e1[m][j];
+                    //TODO: use logger
                     System.out.print(rm[m][j]);
                 }
             }

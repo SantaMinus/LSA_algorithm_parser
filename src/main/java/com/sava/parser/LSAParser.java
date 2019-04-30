@@ -13,7 +13,7 @@ public class LSAParser {
 
     String s;
 
-    boolean lookFor(String s) {
+    boolean isLsaStringEqual(String s) {
         for (String s1 : lsa) {
             if (Objects.equals(s1, s))
                 return true;
