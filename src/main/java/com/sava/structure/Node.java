@@ -1,9 +1,9 @@
 package com.sava.structure;
 
 public class Node {
-    public String name;
-    public int id;
-    public int n;
+    private String name;
+    private int id;
+    private int n;
     private Node next;
 
     public Node(String name, int id, int n) {
@@ -18,5 +18,29 @@ public class Node {
 
     public void setNext(Node n) {
         next = n;
+    }
+
+    public int getN() {
+        return n;
+    }
+
+    public void setN(int n) {
+        this.n = n;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

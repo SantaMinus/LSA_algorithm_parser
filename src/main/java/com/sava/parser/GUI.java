@@ -15,17 +15,17 @@ import java.util.Scanner;
 
 public class GUI {
     private static final String FILE_PATH = "/home/katerynasavina/Documents/tpks1.txt";
-    private static LSAParser parser;
-    private static JButton ok = new JButton("OK");
-    private static JMenuBar menu = new JMenuBar();
+    private LSAParser parser;
+    private JButton ok = new JButton("OK");
+    private JMenuBar menu = new JMenuBar();
     private static final JTextArea input = new JTextArea(2, 30);
     static final JTextArea output = new JTextArea();
-    private static ArrayList<Node> nodes = new ArrayList<>();
-    private static JButton test = new JButton("Test");
-    private static int[][] rm;
+    private ArrayList<Node> nodes = new ArrayList<>();
+    private JButton test = new JButton("Test");
+    private int[][] rm;
 
     public GUI(LSAParser parser) {
-        GUI.parser = parser;
+        this.parser = parser;
     }
 
     public void paint() {
@@ -66,7 +66,7 @@ public class GUI {
         frame.setVisible(true);
     }
 
-    private static void ok() {
+    private void ok() {
         try {
             parser.s = input.getText();
             LSAParser.lsa = new ArrayList<>(Arrays.asList(parser.s.split("\\s* \\s*")));
@@ -81,9 +81,9 @@ public class GUI {
         }
     }
 
-    private static void test() {
+    private void test() {
         int tmp = 0;
-        reachabilityMatrix(LSAParser.matrix);
+        reachabilityMatrix(parser.matrix);
         for (int j = 0; j < rm.length; j++) {
             for (int[] ints : rm) {
                 tmp += ints[j];
@@ -95,7 +95,7 @@ public class GUI {
         output.setText(output.getText() + "\nThe algorithm is correct");
     }
 
-    private static void save() {
+    private void save() {
         output.setText(output.getText() + "\n" + "Saved");
         java.io.PrintStream ps = null;
         try {
@@ -111,12 +111,12 @@ public class GUI {
         }
         ps.println("sep");
         for (int i = 0; i < LSAParser.lsa.size(); i++) {
-            ps.print(LSAParser.additional[i]);
+            ps.print(parser.getAdditional()[i]);
         }
         ps.close();
     }
 
-    private static void load() {
+    private void load() {
         String s;
         int k = 0;
         output.setText(output.getText() + "\n" + "Loaded");
@@ -132,7 +132,7 @@ public class GUI {
             inFile.close();
 
             LSAParser.matrix = new int[s.length()][s.length()];
-            LSAParser.additional = new int[s.length()];
+            parser.setAdditional(new int[s.length()]);
             try {
                 inFile = new Scanner(file);
             } catch (FileNotFoundException e) {
@@ -151,7 +151,7 @@ public class GUI {
             }
             s = inFile.nextLine();
             for (int i = 0; i < s.length(); i++) {
-                LSAParser.additional[i] = Character.digit(s.charAt(i), 10);
+                parser.getAdditional()[i] = Character.digit(s.charAt(i), 10);
             }
 
             output.setText(output.getText() + "\n");
@@ -166,7 +166,7 @@ public class GUI {
         generateLSA();
     }
 
-    private static void addComps(final Container pane) {
+    private void addComps(final Container pane) {
         final JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 1));
         JPanel controls = new JPanel();
@@ -187,7 +187,7 @@ public class GUI {
     }
 
     //LSA objects generation
-    private static void generateLSA() {
+    private void generateLSA() {
         boolean x = false, y = false;
         Node b = new Node("b", 0, 0);
         Node e;
@@ -203,38 +203,38 @@ public class GUI {
                 }
             }
             if (x) {
-                nodes.add(new Condition("x", LSAParser.additional[i], i));
-            } else if (LSAParser.additional[i] == 9) {
+                nodes.add(new Condition("x", parser.getAdditional()[i], i));
+            } else if (parser.getAdditional()[i] == 9) {
                 e = new Node("e", 0, i);
                 nodes.add(e);
             } else if (y) {
-                nodes.add(new Node("y", LSAParser.additional[i], i));
+                nodes.add(new Node("y", parser.getAdditional()[i], i));
             }
             x = false;
             y = false;
         }
         for (int i = 0; i < nodes.size(); i++) {
-            if (nodes.get(i).name.equals("y") || nodes.get(i).name.equals("b")) {
+            if (nodes.get(i).getName().equals("y") || nodes.get(i).getName().equals("b")) {
                 for (int j = 0; j < LSAParser.matrix.length; j++) {
-                    if (LSAParser.matrix[nodes.get(i).n][j] == 1) {
+                    if (LSAParser.matrix[nodes.get(i).getN()][j] == 1) {
                         for (Node node : nodes) {
-                            if (node.n == j)
+                            if (node.getN() == j)
                                 nodes.get(i).setNext(node);
                         }
                     }
                 }
             }
-            if (nodes.get(i).name.equals("x")) {
+            if (nodes.get(i).getName().equals("x")) {
                 for (int j = 0; j < LSAParser.matrix.length; j++) {
-                    if (LSAParser.matrix[nodes.get(i).n][j] == 1) {
+                    if (LSAParser.matrix[nodes.get(i).getN()][j] == 1) {
                         for (Node node : nodes) {
-                            if (node.n == j)
+                            if (node.getN() == j)
                                 nodes.get(i).setNext(node);
                         }
                     }
-                    if (LSAParser.matrix[nodes.get(i).n][j] == 2) {
+                    if (LSAParser.matrix[nodes.get(i).getN()][j] == 2) {
                         for (Node node : nodes) {
-                            if (node.n == j)
+                            if (node.getN() == j)
                                 ((Condition) nodes.get(i)).setFalseWay(node);
                         }
                     }
@@ -243,12 +243,12 @@ public class GUI {
         }
         for (Node node : nodes) {
             if (node.getNext() != null) {
-                output.setText(output.getText() + "\n" + node.name + node.id + " --->  " + node.getNext().name + node.getNext().id);
+                output.setText(output.getText() + "\n" + node.getName() + node.getId() + " --->  " + node.getNext().getName() + node.getNext().getId());
             }
         }
     }
 
-    private static void reachabilityMatrix(int[][] matrix) {
+    private void reachabilityMatrix(int[][] matrix) {
         int[][] e1 = matrix.clone();
         int[][] tmp = new int[matrix.length][matrix.length];
         rm = new int[LSAParser.matrix.length][LSAParser.matrix.length];

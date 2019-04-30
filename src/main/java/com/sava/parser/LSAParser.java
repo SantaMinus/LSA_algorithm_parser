@@ -5,12 +5,11 @@ import java.util.List;
 import java.util.Objects;
 
 public class LSAParser {
-    public static List<String> lsa = new ArrayList<>();
-    public static int[][] matrix;
-    public static int[] additional;
+    static List<String> lsa = new ArrayList<>();
+    static int[][] matrix;
+    private static int[] additional;
     private static int ni = 0;
     private static int no = 0;
-    private static int tmp;
 
     String s;
 
@@ -22,7 +21,7 @@ public class LSAParser {
         return false;
     }
 
-    public static void calculate() {
+    static void calculate() {
         //check for BEGIN
         if (lsa.get(0).equalsIgnoreCase("b")) {
             for (int i = 1; i < lsa.size(); i++) {
@@ -53,7 +52,7 @@ public class LSAParser {
 
     }
 
-    protected static void buildMatrix() {
+    private static void buildMatrix() {
         matrix = new int[lsa.size()][lsa.size()];
         additional = new int[lsa.size()];
         matrix[0][1] = 1;
@@ -61,6 +60,7 @@ public class LSAParser {
 
         for (int i = 1; i < lsa.size(); i++) {
             int k = 1;
+            int tmp;
             if (lsa.get(i).startsWith("y")) {
                 additional[i] = lsa.get(i).charAt(1) - 48;
                 if (lsa.get(i + 1).startsWith("i")) {
@@ -97,5 +97,13 @@ public class LSAParser {
                 additional[i] = 9;
             }
         }
+    }
+
+    int[] getAdditional() {
+        return additional;
+    }
+
+    void setAdditional(int[] ints) {
+        additional = ints;
     }
 }
