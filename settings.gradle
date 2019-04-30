@@ -1,0 +1,3 @@
+rootProject.name = 'lsaAlgorithmParser'
+
+include ':structure', ':parser'

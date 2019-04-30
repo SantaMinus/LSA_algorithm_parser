@@ -1,9 +1,9 @@
-package main.java.com.sava;
+package com.sava.structure;
 
 public class Node {
-    String name;
-    int id;
-    int n;
+    public String name;
+    public int id;
+    public int n;
     private Node next;
 
     public Node(String name, int id, int n) {
