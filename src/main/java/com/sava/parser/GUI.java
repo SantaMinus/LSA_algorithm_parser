@@ -76,8 +76,8 @@ public class GUI {
 
     private void ok() {
         try {
-            parser.s = input.getText();
-            LSAParser.lsa = new ArrayList<>(Arrays.asList(parser.s.split("\\s* \\s*")));
+            String inputString = input.getText();
+            LSAParser.lsa = new ArrayList<>(Arrays.asList(inputString.split("\\s* \\s*")));
 
             for (int i = 0; i < LSAParser.lsa.size(); i++) {
                 output.setText(output.getText() + "  " + LSAParser.lsa.get(i));
@@ -127,7 +127,7 @@ public class GUI {
     private void load() {
         String s;
         int k = 0;
-        output.setText(output.getText() + "\n" + "Loaded");
+        output.setText(output.getText() + "\nLoaded");
         File file = new File(FILE_PATH);
         if (file.exists()) {
             Scanner inFile = null;
@@ -258,20 +258,21 @@ public class GUI {
     }
 
     private void reachabilityMatrix(int[][] matrix) {
+        int matrixLength = matrix.length;
         int[][] e1 = matrix.clone();
-        int[][] tmp = new int[matrix.length][matrix.length];
-        rm = new int[parser.getMatrix().length][parser.getMatrix().length];
+        int[][] tmp = new int[matrixLength][matrixLength];
+        rm = new int[matrixLength][matrixLength];
         for (int i = 0; i < nodes.size(); i++) {
-            for (int m = 0; m < matrix.length; m++) {
-                for (int j = 0; j < matrix.length; j++) {
-                    for (int k = 0; k < matrix.length; k++) {
+            for (int m = 0; m < matrixLength; m++) {
+                for (int j = 0; j < matrixLength; j++) {
+                    for (int k = 0; k < matrixLength; k++) {
                         tmp[m][j] += e1[m][k] * matrix[k][j];
                     }
                 }
             }
             e1 = tmp;
-            for (int m = 0; m < matrix.length; m++) {
-                for (int j = 0; j < matrix.length; j++) {
+            for (int m = 0; m < matrixLength; m++) {
+                for (int j = 0; j < matrixLength; j++) {
                     rm[m][j] = matrix[m][j] ^ e1[m][j];
                     //TODO: use logger
                     System.out.print(rm[m][j]);

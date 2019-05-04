@@ -11,8 +11,6 @@ public class LSAParser {
     private int ni = 0;
     private int no = 0;
 
-    String s;
-
     boolean isLsaStringEqual(String s) {
         for (String s1 : lsa) {
             if (Objects.equals(s1, s))
