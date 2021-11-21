@@ -1,4 +1,4 @@
-package com.sava.parser;
+package com.sava.lsaparser.parser;
 
 import java.util.ArrayList;
 import java.util.List;

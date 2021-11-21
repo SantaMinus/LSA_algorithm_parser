@@ -1,4 +1,4 @@
-package com.sava.structure;
+package com.sava.lsaparser.structure;
 
 public class Node {
     private String name;
