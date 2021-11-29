@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>LSA Parser</title>
+  </head>
+  <body>
+    <h1>Welcome to the LSA Parser</h1>
+    <h3>Input LSA form here:</h3>
+    <p th:text="'LSA: ' + ${lsa.algorithmInput}">
+    <a href="/lsa">Submit another algorithm</a>
+  </body>
+</html>

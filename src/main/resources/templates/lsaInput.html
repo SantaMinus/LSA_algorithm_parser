@@ -1,12 +1,14 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>LSA Parser</title>
-</head>
-<body>
-    <h1>Welcome to the LSA Parser</h1>
-</body>
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <title>LSA Parser</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <h3>Input an algorithm in LSA form here:</h3>
+        <form action="#" th:action="@{/lsa}" th:object="${lsa}" method="post">
+            <p>Algorithm: <input type="text" th:field="*{algorithmInput}" /></p>
+            <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+        </form>
+    </body>
 </html>
