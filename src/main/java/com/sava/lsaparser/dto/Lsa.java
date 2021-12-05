@@ -1,10 +1,11 @@
 package com.sava.lsaparser.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+import javax.validation.constraints.NotBlank;
+
+@Data
 public class Lsa {
+    @NotBlank
     private String algorithmInput;
 }
