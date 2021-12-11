@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <title>LSA Parser</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <h3>Input an algorithm in LSA form here:</h3>
+        <form action="#" th:action="@{/lsa}" th:object="${lsa}" method="post">
+            <div th:if="${#fields.hasErrors()}">
+                <span class="validationError">
+                    Please correct the problems below and resubmit
+                </span>
+            </div>
+            <p>Algorithm: <input type="text" th:field="*{algorithmInput}" /></p>
+            <span th:if="${#fields.hasErrors('algorithmInput')}">Algorithm can not be blank</span>
+            <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+        </form>
+    </body>
+</html>

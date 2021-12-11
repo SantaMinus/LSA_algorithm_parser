@@ -1,7 +1,7 @@
-package com.sava.parser;
+package com.sava.lsaparser.parser;
 
-import com.sava.structure.Condition;
-import com.sava.structure.Node;
+import com.sava.lsaparser.structure.Condition;
+import com.sava.lsaparser.structure.Node;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package com.sava.structure;
+package com.sava.lsaparser.structure;
 
 public class Condition extends Node {
     private Node falseWay;
