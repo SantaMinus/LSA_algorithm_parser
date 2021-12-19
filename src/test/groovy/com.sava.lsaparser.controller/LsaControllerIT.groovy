@@ -7,6 +7,9 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 
+import static org.hamcrest.MatcherAssert.assertThat
+import static org.hamcrest.Matchers.allOf
+import static org.hamcrest.Matchers.containsString
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -42,11 +45,17 @@ class LsaControllerIT extends Specification {
         given:
         def inputString = input
 
-        expect:
-        mockMvc.perform(post("/lsa")
+        when:
+        def res = mockMvc.perform(post("/lsa")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .content('algorithmInput=' + inputString))
-                .andExpect(status().isBadRequest())
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString()
+
+        then:
+        assertThat(res, allOf(
+                containsString('validationError'),
+                containsString('Please correct the problems below and resubmit')))
 
         where:
         input << ['', '   ']
