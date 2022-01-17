@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class LsaControllerIT extends Specification {
     @Autowired
-    MockMvc mockMvc
+    private MockMvc mockMvc
 
     def "GET request shows LSA input form"() {
         expect:
