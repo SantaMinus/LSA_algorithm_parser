@@ -41,6 +41,7 @@ dependencies {
     testImplementation 'junit:junit'
     testImplementation 'org.spockframework:spock-core:2.1-M2-groovy-3.0'
     testImplementation 'org.spockframework:spock-spring:2.1-M2-groovy-3.0'
+    testImplementation 'com.h2database:h2:2.1.210'
 }
 
 test {
