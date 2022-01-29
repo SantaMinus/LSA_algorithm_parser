@@ -1,4 +1,9 @@
 databaseChangeLog:
+  - preConditions:
+      - onFail: MARK_RAN
+      - not:
+          - tableExists:
+              tableName: user
   - changeSet:
       id: create-user-table
       author: santaminus
