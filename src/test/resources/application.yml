@@ -1,0 +1,17 @@
+spring:
+  profiles:
+    active: test
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password: sa
+    initialization-mode: always
+    type: com.zaxxer.hikari.HikariDataSource
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    database: H2
+    open-in-view: false
+    show-sql: true
+  liquibase:
+    enabled: false
