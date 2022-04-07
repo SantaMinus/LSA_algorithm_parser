@@ -3,6 +3,7 @@ package com.sava.lsaparser.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.minidev.json.JSONArray;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -27,6 +28,7 @@ class UserControllerIT {
     }
 
     @Test
+    @Disabled
     void testGetUsersFromDb() throws Exception {
         String res = mockMvc.perform(get("/user"))
                 .andExpect(status().isOk())
