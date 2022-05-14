@@ -11,7 +11,8 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @Entity
-@Table(name = "users", schema = "public")
+// TODO: fix AmbiguousTableNameException & change table name back
+@Table(name = "nusers", schema = "public")
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
