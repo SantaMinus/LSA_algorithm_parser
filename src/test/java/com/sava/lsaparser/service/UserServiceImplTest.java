@@ -27,6 +27,7 @@ class UserServiceImplTest {
 
     @Test
     @DatabaseSetup("/dataset/users.xml")
+//    @DatabaseTearDown("/dataset/cleanDb.xml")
     void testFindEmptyTable() {
         List<UserDto> users = userService.getAll();
 

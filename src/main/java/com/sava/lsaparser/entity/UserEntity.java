@@ -11,8 +11,8 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @Entity
-// TODO: fix AmbiguousTableNameException & change table name back
-@Table(name = "nusers", schema = "public")
+// TODO: fix AmbiguousTableNameException (enable qualifiedTableNames in DBUnit)
+@Table(name = "consumer", schema = "public")
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
