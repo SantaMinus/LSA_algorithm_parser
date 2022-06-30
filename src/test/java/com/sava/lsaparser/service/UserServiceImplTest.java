@@ -2,6 +2,7 @@ package com.sava.lsaparser.service;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
+import com.github.springtestdbunit.annotation.DatabaseTearDown;
 import com.sava.lsaparser.dto.UserDto;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +28,7 @@ class UserServiceImplTest {
 
     @Test
     @DatabaseSetup("/dataset/users.xml")
-//    @DatabaseTearDown("/dataset/cleanDb.xml")
+    @DatabaseTearDown("/dataset/cleanDb.xml")
     void testFindEmptyTable() {
         List<UserDto> users = userService.getAll();
 
