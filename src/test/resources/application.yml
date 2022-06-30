@@ -4,7 +4,5 @@ spring:
     driverClassName: org.h2.Driver
     username: sa
     password: sa
-    initialization-mode: always
-    type: com.zaxxer.hikari.HikariDataSource
   liquibase:
     enabled: false
