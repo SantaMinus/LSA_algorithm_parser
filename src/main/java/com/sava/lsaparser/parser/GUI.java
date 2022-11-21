@@ -2,9 +2,19 @@ package com.sava.lsaparser.parser;
 
 import com.sava.lsaparser.structure.Condition;
 import com.sava.lsaparser.structure.Node;
+import lombok.extern.slf4j.Slf4j;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import java.awt.Container;
+import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -13,23 +23,21 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 // TODO: move into gui package
+@Slf4j
 public class GUI {
-    private LSAParser parser;
-    private JButton ok = new JButton("OK");
-    private JMenuBar menu = new JMenuBar();
+    private final LSAParser parser;
+    private final JButton ok = new JButton("OK");
+    private final JMenuBar menu = new JMenuBar();
     private static final JTextArea input = new JTextArea(2, 30);
     static final JTextArea output = new JTextArea();
-    private ArrayList<Node> nodes = new ArrayList<>();
-    private JButton test = new JButton("Test");
+    private final ArrayList<Node> nodes = new ArrayList<>();
+    private final JButton test = new JButton("Test");
     private int[][] rm;
 
     private static final String FILE_PATH = "tpks1.txt";
     private static final String FILE_NOT_FOUND = "File not found";
-    private static final Logger LOGGER = Logger.getLogger(GUI.class.getName());
 
     public GUI(LSAParser parser) {
         this.parser = parser;
@@ -105,23 +113,22 @@ public class GUI {
 
     private void save() {
         output.setText(output.getText() + "\n" + "Saved");
-        PrintStream ps = null;
-        try {
-            ps = new PrintStream(FILE_PATH);
-        } catch (FileNotFoundException e) {
-            LOGGER.log(Level.SEVERE, FILE_NOT_FOUND, e);
-        }
-        for (int i = 0; i < LSAParser.lsa.size(); i++) {
-            for (int j = 0; j < LSAParser.lsa.size(); j++) {
-                ps.print(parser.getMatrix()[i][j]);
+        try (PrintStream ps = new PrintStream(FILE_PATH)) {
+
+            for (int i = 0; i < LSAParser.lsa.size(); i++) {
+                for (int j = 0; j < LSAParser.lsa.size(); j++) {
+                    ps.print(parser.getMatrix()[i][j]);
+                }
+                ps.println("\n");
             }
-            ps.println("\n");
+            ps.println("sep");
+
+            for (int i = 0; i < LSAParser.lsa.size(); i++) {
+                ps.print(parser.getAdditional()[i]);
+            }
+        } catch (FileNotFoundException e) {
+            log.error(FILE_NOT_FOUND, e);
         }
-        ps.println("sep");
-        for (int i = 0; i < LSAParser.lsa.size(); i++) {
-            ps.print(parser.getAdditional()[i]);
-        }
-        ps.close();
     }
 
     private void load() {
@@ -134,8 +141,9 @@ public class GUI {
             try {
                 inFile = new Scanner(file);
             } catch (FileNotFoundException e) {
-                LOGGER.log(Level.SEVERE, FILE_NOT_FOUND, e);
+                log.error(FILE_NOT_FOUND, e);
             }
+            assert inFile != null;
             s = inFile.nextLine();
             inFile.close();
 
@@ -144,7 +152,7 @@ public class GUI {
             try {
                 inFile = new Scanner(file);
             } catch (FileNotFoundException e) {
-                LOGGER.log(Level.SEVERE, FILE_NOT_FOUND, e);
+                log.error(FILE_NOT_FOUND, e);
             }
 
             while (inFile.hasNext()) {
@@ -274,8 +282,7 @@ public class GUI {
             for (int m = 0; m < matrixLength; m++) {
                 for (int j = 0; j < matrixLength; j++) {
                     rm[m][j] = matrix[m][j] ^ e1[m][j];
-                    //TODO: use logger
-                    System.out.print(rm[m][j]);
+                    log.debug("Reachability matrix [{}][{}] = {}", m, j, rm[m][j]);
                 }
             }
         }
