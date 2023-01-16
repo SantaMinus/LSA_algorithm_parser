@@ -1,11 +1,14 @@
 package com.sava.lsaparser.dto;
 
+import com.sava.lsaparser.validate.PasswordMatches;
+import com.sava.lsaparser.validate.ValidEmail;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Data
+@PasswordMatches
 public class UserDto {
     @NotNull
     @NotEmpty
