@@ -30,10 +30,10 @@ public class User implements UserDetails {
   private int id;
 
   @NotNull
-  private String username;
+  private final String username;
 
   @NotNull
-  private String password;
+  private final String password;
   private final String fullname;
   private final String street;
   private final String city;
