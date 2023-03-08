@@ -16,18 +16,20 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/lsa")
 public class LsaController {
-    @GetMapping
-    public String showLsaInputForm(Model model) {
-        model.addAttribute("lsa", new Lsa());
-        return "lsaInput";
-    }
 
-    @PostMapping
-    public String createLsa(@ModelAttribute("lsa") @Valid Lsa lsa, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return "lsaInput";
-        }
-        model.addAttribute("lsa", lsa);
-        return "inputFormResult";
+  @GetMapping
+  public String showLsaInputForm(Model model) {
+    model.addAttribute("lsa", new Lsa());
+    return "lsaInput";
+  }
+
+  @PostMapping
+  public String createLsa(@ModelAttribute("lsa") @Valid Lsa lsa, BindingResult result,
+      Model model) {
+    if (result.hasErrors()) {
+      return "lsaInput";
     }
+    model.addAttribute("lsa", lsa);
+    return "inputFormResult";
+  }
 }

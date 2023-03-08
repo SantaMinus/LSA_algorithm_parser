@@ -1,5 +1,6 @@
 package com.sava.lsaparser.entity;
 
+import java.io.Serial;
 import java.util.Collection;
 import java.util.List;
 import javax.persistence.Entity;
@@ -24,6 +25,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Table(name = "users", schema = "public")
 public class User implements UserDetails {
 
+  @Serial
   private static final long serialVersionUID = 1L;
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,7 +36,7 @@ public class User implements UserDetails {
 
   @NotNull
   private final String password;
-  private final String fullname;
+  private final String fullName;
   private final String street;
   private final String city;
   private final String state;
