@@ -27,7 +27,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.authorizeRequests()
-        .antMatchers("/register").permitAll();
+        .antMatchers("/register").permitAll()
+        .antMatchers("/lsa").hasAuthority("ROLE_USER")
+        .and()
+        .formLogin()
+        .loginPage("/login")
+        // TODO: add auth logic
+        .loginProcessingUrl("/authenticate")
+        .usernameParameter("user")
+        .passwordParameter("pwd")
+        .defaultSuccessUrl("/lsa");
   }
 
   @Bean
