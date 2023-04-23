@@ -20,7 +20,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class LsaControllerIT extends BaseIntegrationTest {
   def "GET request shows LSA input form"() {
     expect:
-    mockMvc.perform(get("/lsa")).andExpect(view().name('lsaInput'))
+    mockMvc.perform(get("/lsa"))
+        .andExpect(status().isOk())
+        .andExpect(view().name('lsaInput'))
   }
 
   def "POST creates an LSA"() {
