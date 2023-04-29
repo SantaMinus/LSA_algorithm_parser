@@ -1,10 +1,12 @@
 package com.sava.lsaparser.controller
 
 import com.sava.lsaparser.BaseIntegrationTest
+import org.junit.runner.RunWith
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.context.junit4.SpringRunner
 
 import static org.hamcrest.MatcherAssert.assertThat
 import static org.hamcrest.Matchers.allOf
@@ -16,8 +18,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @ActiveProfiles("test")
-@WithMockUser(roles = "admin")
+@WithMockUser(roles = "USER")
+@RunWith(SpringRunner.class)
 class LsaControllerIT extends BaseIntegrationTest {
+
   def "GET request shows LSA input form"() {
     expect:
     mockMvc.perform(get("/lsa"))
