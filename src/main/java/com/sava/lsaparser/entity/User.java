@@ -22,7 +22,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
 @RequiredArgsConstructor
 // TODO: fix AmbiguousTableNameException (enable qualifiedTableNames in DBUnit)
-@Table(name = "users", schema = "public")
+@Table(name = "public.users", schema = "public")
 public class User implements UserDetails {
 
   @Serial
