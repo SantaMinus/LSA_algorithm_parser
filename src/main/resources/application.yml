@@ -1,7 +1,4 @@
 spring:
-  security:
-    encoder:
-      secret: 53cr3t
   h2:
     console:
       enabled: true
