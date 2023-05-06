@@ -1,6 +1,7 @@
 package com.sava.lsaparser.config;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -17,6 +18,8 @@ import org.springframework.security.crypto.password.StandardPasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   private final UserDetailsService userDetailsService;
+  @Value("${spring.security.encoder.secret}")
+  private String secret;
 
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -38,6 +41,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Bean
   public PasswordEncoder encoder() {
-    return new StandardPasswordEncoder("53cr3t");
+    return new StandardPasswordEncoder(secret);
   }
 }
