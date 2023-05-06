@@ -21,7 +21,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
 @RequiredArgsConstructor
-// TODO: fix AmbiguousTableNameException (enable qualifiedTableNames in DBUnit)
 @Table(name = "public.users", schema = "public")
 public class User implements UserDetails {
 
