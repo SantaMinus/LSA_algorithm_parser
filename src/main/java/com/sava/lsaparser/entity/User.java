@@ -21,7 +21,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
 @RequiredArgsConstructor
-@Table(name = "users", schema = "public")
+@Table(name = "public.users")
 public class User implements UserDetails {
 
   @Serial
