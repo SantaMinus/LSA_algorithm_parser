@@ -5,8 +5,8 @@ databaseChangeLog:
       preConditions:
         - onFail: MARK_RAN
         - not:
-          - tableExists:
-              tableName: users
+            - tableExists:
+                tableName: users
       changes:
         - createTable:
             tableName: users

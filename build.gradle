@@ -32,6 +32,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.hibernate:hibernate-validator:6.1.0.Final'
     implementation 'org.codehaus.groovy:groovy-all:3.0.9'
     implementation 'org.postgresql:postgresql:42.3.1'
@@ -42,6 +43,7 @@ dependencies {
     runtimeOnly 'com.h2database:h2'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'junit:junit'
     testImplementation 'org.spockframework:spock-core:2.1-M2-groovy-3.0'
     testImplementation 'org.spockframework:spock-spring:2.1-M2-groovy-3.0'

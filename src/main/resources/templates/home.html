@@ -1,11 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
         "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<html xmlns:th="https://www.thymeleaf.org">
   <head>
       <title>LSA Parser</title>
   </head>
   <body>
     <h1>Welcome to the LSA Parser</h1>
     <button onclick="location.href='/lsa'" type="button">Start</button>
+
+    <form method="POST" th:action="@{/logout}">
+      <input type="submit" value="Logout"/>
+    </form>
   </body>
 </html>

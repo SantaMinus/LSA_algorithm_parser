@@ -1,7 +1,7 @@
 package com.sava.lsaparser.service;
 
 import com.sava.lsaparser.dto.UserDto;
-import com.sava.lsaparser.entity.UserEntity;
+import com.sava.lsaparser.entity.User;
 import com.sava.lsaparser.mapper.UserMapper;
 import com.sava.lsaparser.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto create(UserDto user) {
-        UserEntity created = userRepository.save(userMapper.dtoToEntity(user));
+        User created = userRepository.save(userMapper.dtoToEntity(user));
         return userMapper.entityToDto(created);
     }
 }
