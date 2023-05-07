@@ -21,7 +21,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
 @RequiredArgsConstructor
-@Table(name = "public.users", schema = "public")
+@Table(name = "users", schema = "public")
 public class User implements UserDetails {
 
   @Serial
@@ -36,11 +36,6 @@ public class User implements UserDetails {
   @NotNull
   private final String password;
   private final String fullName;
-  private final String street;
-  private final String city;
-  private final String state;
-  private final String zip;
-  private final String phoneNumber;
   private String email;
 
   @Override
