@@ -27,6 +27,7 @@ import java.util.Scanner;
 // TODO: move into gui package
 @Slf4j
 public class GUI {
+
     private final LSAParser parser;
     private final JButton ok = new JButton("OK");
     private final JMenuBar menu = new JMenuBar();
@@ -157,13 +158,15 @@ public class GUI {
 
             while (inFile.hasNext()) {
                 s = inFile.nextLine();
-                if (s.equals("sep"))
+                if (s.equals("sep")) {
                     break;
+                }
                 for (int i = 0; i < s.length(); i++) {
                     parser.getMatrix()[k][i] = Character.digit(s.charAt(i), 10);
                 }
-                if (!s.equals(""))
+                if (!s.equals("")) {
                     k++;
+                }
             }
             s = inFile.nextLine();
             for (int i = 0; i < s.length(); i++) {
@@ -235,8 +238,9 @@ public class GUI {
                 for (int j = 0; j < parser.getMatrix().length; j++) {
                     if (parser.getMatrix()[nodes.get(i).getN()][j] == 1) {
                         for (Node node : nodes) {
-                            if (node.getN() == j)
+                            if (node.getN() == j) {
                                 nodes.get(i).setNext(node);
+                            }
                         }
                     }
                 }
@@ -245,14 +249,16 @@ public class GUI {
                 for (int j = 0; j < parser.getMatrix().length; j++) {
                     if (parser.getMatrix()[nodes.get(i).getN()][j] == 1) {
                         for (Node node : nodes) {
-                            if (node.getN() == j)
+                            if (node.getN() == j) {
                                 nodes.get(i).setNext(node);
+                            }
                         }
                     }
                     if (parser.getMatrix()[nodes.get(i).getN()][j] == 2) {
                         for (Node node : nodes) {
-                            if (node.getN() == j)
+                            if (node.getN() == j) {
                                 ((Condition) nodes.get(i)).setFalseWay(node);
+                            }
                         }
                     }
                 }
@@ -260,7 +266,8 @@ public class GUI {
         }
         for (Node node : nodes) {
             if (node.getNext() != null) {
-                output.setText(output.getText() + "\n" + node.getName() + node.getId() + " --->  " + node.getNext().getName() + node.getNext().getId());
+                output.setText(output.getText() + "\n" + node.getName() + node.getId() + " --->  "
+                        + node.getNext().getName() + node.getNext().getId());
             }
         }
     }

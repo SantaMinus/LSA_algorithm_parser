@@ -1,6 +1,8 @@
 package com.sava.lsaparser.controller
 
 import com.sava.lsaparser.BaseIntegrationTest
+import com.sava.lsaparser.service.LsaValidatorService
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.security.test.context.support.WithMockUser
 
@@ -14,6 +16,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WithMockUser(roles = "USER")
 class LsaControllerIT extends BaseIntegrationTest {
+  @Autowired
+  private LsaValidatorService validatorService;
 
   def "GET request shows LSA input form"() {
     expect:

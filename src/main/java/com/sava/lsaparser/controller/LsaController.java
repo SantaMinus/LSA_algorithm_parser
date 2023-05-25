@@ -1,6 +1,10 @@
 package com.sava.lsaparser.controller;
 
 import com.sava.lsaparser.dto.Lsa;
+import com.sava.lsaparser.exception.LsaValidationException;
+import com.sava.lsaparser.service.LsaValidatorService;
+import javax.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,12 +14,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.validation.Valid;
-
 @Slf4j
 @Controller
 @RequestMapping("/lsa")
+@RequiredArgsConstructor
 public class LsaController {
+
+  private final LsaValidatorService lsaValidatorService;
 
   @GetMapping
   public String showLsaInputForm(Model model) {
@@ -28,6 +33,12 @@ public class LsaController {
       Model model) {
     if (result.hasErrors()) {
       return "lsaInput";
+    }
+    try {
+      // TODO: put to functional interface
+      lsaValidatorService.validate(lsa);
+    } catch (LsaValidationException e) {
+      // TODO: handle exception
     }
     model.addAttribute("lsa", lsa);
     return "inputFormResult";
