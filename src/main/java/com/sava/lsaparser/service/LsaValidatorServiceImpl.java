@@ -19,7 +19,7 @@ public class LsaValidatorServiceImpl implements LsaValidatorService {
   @Override
   public void validate(String lsa) throws LsaValidationException {
     List<String> lsaNodes = new ArrayList<>(
-        Arrays.asList(lsa.split("\\s* \\s*")));
+        Arrays.asList(lsa.split(" ")));
 
     checkValidCharacters(lsaNodes);
     checkForBegin(lsaNodes);
