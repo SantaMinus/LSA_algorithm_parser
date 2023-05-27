@@ -36,7 +36,7 @@ public class LsaController {
     }
     try {
       // TODO: put to functional interface
-      lsaValidatorService.validate(lsa);
+      lsaValidatorService.validate(lsa.getAlgorithmInput());
     } catch (LsaValidationException e) {
       // TODO: handle exception
     }
