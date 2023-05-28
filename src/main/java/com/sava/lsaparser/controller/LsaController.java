@@ -1,8 +1,7 @@
 package com.sava.lsaparser.controller;
 
 import com.sava.lsaparser.dto.Lsa;
-import com.sava.lsaparser.exception.LsaValidationException;
-import com.sava.lsaparser.service.LsaValidatorService;
+import com.sava.lsaparser.service.LsaProcessingService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class LsaController {
 
-  private final LsaValidatorService lsaValidatorService;
+  private final LsaProcessingService lsaProcessingService;
 
   @GetMapping
   public String showLsaInputForm(Model model) {
@@ -34,12 +33,7 @@ public class LsaController {
     if (result.hasErrors()) {
       return "lsaInput";
     }
-    try {
-      // TODO: put to functional interface
-      lsaValidatorService.validate(lsa.getAlgorithmInput());
-    } catch (LsaValidationException e) {
-      // TODO: handle exception
-    }
+    lsaProcessingService.processLsa(lsa);
     model.addAttribute("lsa", lsa);
     return "inputFormResult";
   }

@@ -35,7 +35,7 @@ public class GUI {
     static final JTextArea output = new JTextArea();
     private final ArrayList<Node> nodes = new ArrayList<>();
     private final JButton test = new JButton("Test");
-    private int[][] rm;
+    private int[][] reachabilityMatrix;
 
     private static final String FILE_PATH = "tpks1.txt";
     private static final String FILE_NOT_FOUND = "File not found";
@@ -101,8 +101,8 @@ public class GUI {
     private void test() {
         int tmp = 0;
         reachabilityMatrix(parser.getMatrix());
-        for (int j = 0; j < rm.length; j++) {
-            for (int[] ints : rm) {
+        for (int j = 0; j < reachabilityMatrix.length; j++) {
+            for (int[] ints : reachabilityMatrix) {
                 tmp += ints[j];
             }
             if (tmp == 0 && j != 0) {
@@ -276,7 +276,7 @@ public class GUI {
         int matrixLength = matrix.length;
         int[][] e1 = matrix.clone();
         int[][] tmp = new int[matrixLength][matrixLength];
-        rm = new int[matrixLength][matrixLength];
+        reachabilityMatrix = new int[matrixLength][matrixLength];
         for (int i = 0; i < nodes.size(); i++) {
             for (int m = 0; m < matrixLength; m++) {
                 for (int j = 0; j < matrixLength; j++) {
@@ -288,8 +288,8 @@ public class GUI {
             e1 = tmp;
             for (int m = 0; m < matrixLength; m++) {
                 for (int j = 0; j < matrixLength; j++) {
-                    rm[m][j] = matrix[m][j] ^ e1[m][j];
-                    log.debug("Reachability matrix [{}][{}] = {}", m, j, rm[m][j]);
+                    reachabilityMatrix[m][j] = matrix[m][j] ^ e1[m][j];
+                    log.debug("Reachability matrix [{}][{}] = {}", m, j, reachabilityMatrix[m][j]);
                 }
             }
         }
