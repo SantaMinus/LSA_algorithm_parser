@@ -1,6 +1,9 @@
 package com.sava.lsaparser.service;
 
+import com.sava.lsaparser.structure.Node;
+import java.util.List;
+
 public interface LsaParserService {
 
-  void calculate(String lsa);
+  List<Node> calculate(String lsa);
 }

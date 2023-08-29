@@ -1,12 +1,14 @@
 package com.sava.lsaparser.service;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class AdjacencyDetails {
+@Builder
+public class MatrixDetails {
 
-  private int[][] adjMatrix;
+  private int[][] matrix;
   private int[] additional;
 }

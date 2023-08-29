@@ -1,46 +1,50 @@
 package com.sava.lsaparser.structure;
 
+import lombok.ToString;
+
+@ToString
 public class Node {
-    private String name;
-    private int id;
-    private int n;
-    private Node next;
 
-    public Node(String name, int id, int n) {
-        this.id = id;
-        this.name = name;
-        this.n = n;
-    }
+  private String name;
+  private int id;
+  private int n;
+  private Node next;
 
-    public Node getNext() {
-        return next;
-    }
+  public Node(String name, int id, int n) {
+    this.id = id;
+    this.name = name;
+    this.n = n;
+  }
 
-    public void setNext(Node n) {
-        next = n;
-    }
+  public Node getNext() {
+    return next;
+  }
 
-    public int getN() {
-        return n;
-    }
+  public void setNext(Node n) {
+    next = n;
+  }
 
-    public void setN(int n) {
-        this.n = n;
-    }
+  public int getN() {
+    return n;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public void setN(int n) {
+    this.n = n;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public int getId() {
-        return id;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
 }

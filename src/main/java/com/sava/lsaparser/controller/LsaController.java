@@ -2,6 +2,8 @@ package com.sava.lsaparser.controller;
 
 import com.sava.lsaparser.dto.Lsa;
 import com.sava.lsaparser.service.LsaProcessingService;
+import com.sava.lsaparser.structure.Node;
+import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,8 +35,8 @@ public class LsaController {
     if (result.hasErrors()) {
       return "lsaInput";
     }
-    lsaProcessingService.processLsa(lsa);
-    model.addAttribute("lsa", lsa);
+    List<Node> generatedLsa = lsaProcessingService.processLsa(lsa);
+    model.addAttribute("lsa", generatedLsa.toString());
     return "inputFormResult";
   }
 }
