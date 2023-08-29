@@ -12,6 +12,5 @@ public interface LsaProcessingService {
    * @param lsa containing the LSA string
    * @return a list of Nodes connected to each other
    */
-  // TODO: return reachability matrix
   List<Node> processLsa(Lsa lsa);
 }
