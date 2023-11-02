@@ -1,5 +1,12 @@
 package com.sava.lsaparser.service;
 
+import static com.sava.lsaparser.service.LsaValidatorServiceImpl.BEGIN;
+import static com.sava.lsaparser.service.LsaValidatorServiceImpl.NODE;
+import static com.sava.lsaparser.service.LsaValidatorServiceImpl.END;
+import static com.sava.lsaparser.service.LsaValidatorServiceImpl.IN;
+import static com.sava.lsaparser.service.LsaValidatorServiceImpl.CONDITION;
+import static com.sava.lsaparser.service.LsaValidatorServiceImpl.OUT;
+
 import com.sava.lsaparser.structure.Condition;
 import com.sava.lsaparser.structure.Node;
 import java.util.ArrayList;
@@ -35,15 +42,15 @@ public class LsaParserServiceImpl implements LsaParserService {
     for (int i = 1; i < lsa.size(); i++) {
       int offset = 1;
       int tmp;
-      if (lsa.get(i).startsWith("y")) {
+      if (lsa.get(i).startsWith(NODE)) {
         additional[i] = getNodeNumber(lsa, i);
-        if (lsa.get(i + 1).startsWith("i")) {
+        if (lsa.get(i + 1).startsWith(IN)) {
           offset++;
-        } else if (lsa.get(i + 1).startsWith("o")) {
+        } else if (lsa.get(i + 1).startsWith(OUT)) {
           for (int j = 0; j < lsa.size(); j++) {
-            if (lsa.get(j).equals("i" + lsa.get(i + 1).charAt(1))) {
+            if (lsa.get(j).equals(IN + lsa.get(i + 1).charAt(1))) {
               tmp = j;
-              if (lsa.get(j + 1).startsWith("o") || lsa.get(j + 1).startsWith("i")) {
+              if (lsa.get(j + 1).startsWith(OUT) || lsa.get(j + 1).startsWith(IN)) {
                 offset++;
               }
               matrix[i][tmp + offset] = 1;
@@ -54,15 +61,15 @@ public class LsaParserServiceImpl implements LsaParserService {
         }
       }
       // there should be an O vertex after the X
-      if (lsa.get(i).startsWith("x")) {
+      if (lsa.get(i).startsWith(CONDITION)) {
         additional[i] = getNodeNumber(lsa, i);
         for (int j = 0; j < lsa.size(); j++) {
           if (lsa.get(i + 1).length() < 2) {
             break;
           }
-          if (lsa.get(j).equals("i" + lsa.get(i + 1).charAt(1))) {
+          if (lsa.get(j).equals(IN + lsa.get(i + 1).charAt(1))) {
             tmp = j;
-            if (lsa.get(j + 1).startsWith("o") || lsa.get(j + 1).startsWith("i")) {
+            if (lsa.get(j + 1).startsWith(OUT) || lsa.get(j + 1).startsWith(IN)) {
               offset++;
             }
             matrix[i][tmp + offset] = 1;
@@ -72,12 +79,12 @@ public class LsaParserServiceImpl implements LsaParserService {
         if (lsa.size() < 4) {
           break;
         }
-        if (lsa.get(i + 2).startsWith("o") || lsa.get(i + 2).startsWith("i")) {
+        if (lsa.get(i + 2).startsWith(OUT) || lsa.get(i + 2).startsWith(IN)) {
           offset++;
         }
         matrix[i][i + offset + 1] = 2;
       }
-      if (lsa.get(i).equals("e")) {
+      if (lsa.get(i).equals(END)) {
         // TODO: change to another symbol
         additional[i] = 9;
       }
@@ -103,7 +110,7 @@ public class LsaParserServiceImpl implements LsaParserService {
 
   private static void linkNodes(int[][] matrix, List<Node> nodes) {
     for (int i = 0; i < nodes.size(); i++) {
-      if (nodes.get(i).getName().equals("y") || nodes.get(i).getName().equals("b")) {
+      if (nodes.get(i).getName().equals(NODE) || nodes.get(i).getName().equals(BEGIN)) {
         for (int j = 0; j < matrix.length; j++) {
           if (matrix[nodes.get(i).getN()][j] == 1) {
             for (Node node : nodes) {
@@ -114,7 +121,7 @@ public class LsaParserServiceImpl implements LsaParserService {
           }
         }
       }
-      if (nodes.get(i).getName().equals("x")) {
+      if (nodes.get(i).getName().equals(CONDITION)) {
         for (int j = 0; j < matrix.length; j++) {
           if (matrix[nodes.get(i).getN()][j] == 1) {
             for (Node node : nodes) {
@@ -140,7 +147,7 @@ public class LsaParserServiceImpl implements LsaParserService {
     boolean x = false;
     boolean y = false;
     // there is always a beginning
-    Node b = new Node("b", 0, 0);
+    Node b = new Node(BEGIN, 0, 0);
     nodes.add(b);
 
     for (int i = 1; i < matrix.length; i++) {
@@ -154,12 +161,12 @@ public class LsaParserServiceImpl implements LsaParserService {
         }
       }
       if (x) {
-        nodes.add(new Condition("x", additional[i], i));
+        nodes.add(new Condition(CONDITION, additional[i], i));
       } else if (additional[i] == 9) {
-        Node e = new Node("e", 0, i);
+        Node e = new Node(END, 0, i);
         nodes.add(e);
       } else if (y) {
-        nodes.add(new Node("y", additional[i], i));
+        nodes.add(new Node(NODE, additional[i], i));
       }
       x = false;
       y = false;
