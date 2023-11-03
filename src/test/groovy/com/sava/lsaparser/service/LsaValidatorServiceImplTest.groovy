@@ -17,7 +17,7 @@ class LsaValidatorServiceImplTest extends Specification {
 
     then:
     LsaValidationException e = thrown(LsaValidationException)
-    e.message == "LSA must begin with 'begin'"
+    e.message == "LSA must begin with 'b'/'B'"
   }
 
   def "validate() throws LsaValidationException when multiple begins"() {
