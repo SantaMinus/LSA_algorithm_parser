@@ -18,4 +18,8 @@ spring:
     change-log: classpath:db/changelog/db.changelog-master.yaml
 logging:
   level:
-    root: DEBUG
+    root: debug
+    org:
+      hibernate: trace
+      springframework:
+        web: debug

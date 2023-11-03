@@ -1,6 +1,8 @@
 package com.sava.lsaparser.controller
 
 import com.sava.lsaparser.BaseIntegrationTest
+import com.sava.lsaparser.service.LsaValidatorService
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.security.test.context.support.WithMockUser
 
@@ -14,6 +16,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WithMockUser(roles = "USER")
 class LsaControllerIT extends BaseIntegrationTest {
+  @Autowired
+  private LsaValidatorService validatorService
 
   def "GET request shows LSA input form"() {
     expect:
@@ -24,7 +28,8 @@ class LsaControllerIT extends BaseIntegrationTest {
 
   def "POST creates an LSA"() {
     given:
-    def inputString = 'test'
+    def inputString = 'b y1 e'
+    def expectedRes = '''[Node(name=b, id=0, n=0, next=Node(name=y, id=1, n=1, next=Node(name=e, id=0, n=2, next=null))), Node(name=y, id=1, n=1, next=Node(name=e, id=0, n=2, next=null)), Node(name=e, id=0, n=2, next=null)]'''
 
     when:
     def res = mockMvc.perform(post("/lsa")
@@ -34,7 +39,7 @@ class LsaControllerIT extends BaseIntegrationTest {
         .andReturn().getResponse().getContentAsString()
 
     then:
-    res.contains('LSA: ' + inputString)
+    res.contains(expectedRes)
   }
 
   def "POST validates an LSA for non-blank algorithmInput"() {
