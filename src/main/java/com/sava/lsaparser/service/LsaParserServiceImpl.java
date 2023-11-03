@@ -32,7 +32,8 @@ public class LsaParserServiceImpl implements LsaParserService {
   // b y1 x1 o1 y2 i1 y3 e
   // b y1 x1 o1 y3 o2 i1 y4 i2 e
   private MatrixDetails buildMatrix(String inputLsaString) {
-    List<String> lsa = new ArrayList<>(Arrays.asList(inputLsaString.split("\\s* \\s*")));
+    List<String> lsa = new ArrayList<>(
+        Arrays.asList(inputLsaString.split("\\s* ")));
     int[][] matrix = new int[lsa.size()][lsa.size()];
     int[] additional = new int[lsa.size()];
 

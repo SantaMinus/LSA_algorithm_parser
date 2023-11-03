@@ -31,7 +31,7 @@ public class LsaValidatorServiceImpl implements LsaValidatorService {
     String firstNode = lsaNodes.get(0);
 
     if (!firstNode.equalsIgnoreCase(BEGIN)) {
-      throw new LsaValidationException("LSA must begin with 'begin'");
+      throw new LsaValidationException("LSA must begin with 'b'/'B'");
     }
     for (int i = 1; i < lsaNodes.size(); i++) {
       if (lsaNodes.get(i).equalsIgnoreCase(BEGIN)) {
