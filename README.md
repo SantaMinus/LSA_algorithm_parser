@@ -1,6 +1,6 @@
 ## LSA parser
 
-This is a course project on TPKS (rus. "theory of computer systems projecting")
+This is a course project on TPKS (ukr. "theory of designing computer systems")
 
 It is designed to parse the logical scheme of the algorithm (LSA) into the graphical one (GSA)
 

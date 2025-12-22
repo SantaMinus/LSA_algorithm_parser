@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class LSAParser {
-    static List<String> lsa = new ArrayList<>();
+    public static List<String> lsa = new ArrayList<>();
     private int[][] matrix;
     private int[] additional;
     private int ni = 0;
@@ -19,7 +19,7 @@ public class LSAParser {
         return false;
     }
 
-    void calculate() {
+    public void calculate() {
         //check for BEGIN
         if (lsa.get(0).equalsIgnoreCase("b")) {
             for (int i = 1; i < lsa.size(); i++) {
